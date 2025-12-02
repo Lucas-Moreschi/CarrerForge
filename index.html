@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerForge | IA para Currículos e Recrutamento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236D28D9'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+    <style>
+        :root {
+            --primary: #6D28D9;
+            --primary-dark: #5B21B6;
+            --secondary: #EC4899;
+            --accent: #10B981;
+            --light: #F8FAFC;
+            --dark: #1F2937;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --gray: #6B7280;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --gradient: linear-gradient(135deg, #6D28D9 0%, #EC4899 100%);
+            --gradient-light: linear-gradient(135deg, #8B5CF6 0%, #F472B6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            font-size: 2.8rem;
+            color: var(--primary);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 8px rgba(109, 40, 217, 0.2));
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .tabs-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.2s both;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .tabs-header {
+            display: flex;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tabs-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+            z-index: 1;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 22px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .tab-btn:hover::before {
+            left: 0;
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 -3px 0 var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .input-toggle {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #E5E7EB;
+            background: #F9FAFB;
+            position: relative;
+        }
+
+        .input-toggle-btn {
+            flex: 1;
+            padding: 14px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--gray);
+            position: relative;
+            z-index: 1;
+        }
+
+        .input-toggle-btn.active {
+            color: var(--primary);
+        }
+
+        .input-toggle-btn:not(.active):hover {
+            background: #EDE9FE;
+            color: var(--primary);
+        }
+
+        .input-toggle-indicator {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            height: calc(100% - 4px);
+            width: calc(50% - 2px);
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            z-index: 0;
+        }
+
+        .input-toggle-btn.active + .input-toggle-indicator {
+            transform: translateX(100%);
+        }
+
+        .input-section {
+            display: none;
+        }
+
+        .input-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 25px;
+            background: #F9FAFB;
+            border: 2px dashed #D1D5DB;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .file-upload-label:hover {
+            background: #EDE9FE;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-upload-label i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .file-name {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .text-input {
+            min-height: 220px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(109, 40, 217, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(109, 40, 217, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: var(--gray);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 8px 20px rgba(107, 114, 128, 0.4);
+        }
+
+        .btn-success {
+            background: var(--success);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(109, 40, 217, 0.2);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+            margin: 0 auto 25px;
+        }
+
+        .ai-process {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 20px;
+            background: #F0F9FF;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .ai-process i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        .result {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            border-left: 5px solid var(--primary);
+            animation: fadeIn 0.8s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .score-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #F8FAFC;
+            border-radius: 16px;
+        }
+
+        .score-circle {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.1));
+        }
+
+        .score-circle svg {
+            width: 140px;
+            height: 140px;
+            transform: rotate(-90deg);
+        }
+
+        .score-circle-bg {
+            fill: none;
+            stroke: #E5E7EB;
+            stroke-width: 8;
+        }
+
+        .score-circle-progress {
+            fill: none;
+            stroke: var(--success);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 377;
+            stroke-dashoffset: 377;
+            transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            animation: scoreCount 2s ease-out;
+        }
+
+        .score-info h3 {
+            margin-bottom: 12px;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+
+        .score-info p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .analysis-section {
+            margin-top: 30px;
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+            border: 1px solid #F1F5F9;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .analysis-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .analysis-section h3 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 2px solid #F1F5F9;
+            padding-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .analysis-section h3 i {
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .analysis-section h3 .toggle-icon {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .analysis-section.collapsed h3 .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .analysis-content {
+            max-height: 1000px;
+            opacity: 1;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        .analysis-section.collapsed .analysis-content {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .highlight-box {
+            background: #F0F9FF;
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 12px 12px 0;
+            animation: slideInLeft 0.6s ease;
+        }
+
+        .suggestion-item, .summary-item, .match-item {
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--warning);
+            animation: slideInRight 0.6s ease;
+            transition: var(--transition);
+        }
+
+        .suggestion-item:hover, .summary-item:hover, .match-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .suggestion-item:nth-child(2n), .summary-item:nth-child(2n), .match-item:nth-child(2n) {
+            border-left-color: var(--success);
+            animation-delay: 0.1s;
+        }
+
+        .suggestion-item:nth-child(3n), .summary-item:nth-child(3n), .match-item:nth-child(3n) {
+            border-left-color: var(--secondary);
+            animation-delay: 0.2s;
+        }
+
+        .suggestion-title, .summary-title, .match-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+
+        .suggestion-title i, .summary-title i, .match-title i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .suggestion-content, .summary-content, .match-content {
+            margin-top: 12px;
+            padding: 15px;
+            background: #F8FAFC;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .match-level {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        .match-high {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .match-medium {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .match-low {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .alert {
+            padding: 15px 18px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        .alert-error {
+            background: #FEF2F2;
+            border-left: 4px solid var(--danger);
+            color: var(--danger);
+        }
+
+        .alert-success {
+            background: #F0F9FF;
+            border-left: 4px solid var(--success);
+            color: var(--success);
+        }
+
+        .ai-thinking {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 15px;
+            font-style: italic;
+            color: var(--gray);
+        }
+
+        .ai-thinking i {
+            color: var(--primary);
+        }
+
+        .improved-cv-section {
+            margin-top: 40px;
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .improved-cv-container {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+            position: relative;
+            border: 1px solid #F1F5F9;
+        }
+
+        .improved-cv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .improved-cv-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .cv-content {
+            background: #F8FAFC;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 25px;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--gray);
+            font-size: 0.95rem;
+            animation: fadeIn 1s ease 0.6s both;
+            padding: 20px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes scoreCount {
+            0% { 
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tabs-header {
+                flex-direction: column;
+            }
+            
+            .score-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .tab-content {
+                padding: 25px;
+            }
+            
+            .improved-cv-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .improved-cv-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .btn {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+            
+            .analysis-section h3 {
+                font-size: 1.2rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .analysis-section h3 .toggle-icon {
+                align-self: flex-end;
+                margin-top: -30px;
+            }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            border-radius: 50%;
+            animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: -150px;
+            right: -150px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--secondary);
+            bottom: -100px;
+            left: -100px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--accent);
+            top: 50%;
+            left: 10%;
+            animation: float 12s ease-in-out infinite;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.2);
+            animation: ripple 1s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-gem logo-icon floating"></i>
+            </div>
+            <h1>CareerForge</h1>
+            <p class="subtitle">Transforme seu currículo com IA e encontre os melhores candidatos</p>
+        </header>
+
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="pf">
+                    <i class="fas fa-user"></i> Otimizar Meu CV
+                </button>
+                <button class="tab-btn" data-tab="pj">
+                    <i class="fas fa-building"></i> Analisar Candidato
+                </button>
+            </div>
+
+            <div class="tab-content active" id="pf">
+                <div class="alert alert-error" id="pf-error"></div>
+                
+                <form id="pf-form">
+                    <div class="form-group">
+                        <label for="pf-area">
+                            <i class="fas fa-briefcase"></i> Área de Atuação (Opcional)
+                        </label>
+                        <select id="pf-area">
+                            <option value="">Selecione uma área (opcional)</option>
+                            <option value="tecnologia">Tecnologia</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="vendas">Vendas</option>
+                            <option value="rh">Recursos Humanos</option>
+                            <option value="financeiro">Financeiro</option>
+                            <option value="juridico">Jurídico</option>
+                            <option value="saude">Saúde</option>
+                            <option value="educacao">Educação</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-file-upload"></i> Enviar Currículo
+                        </label>
+                        <div class="input-toggle">
+                            <button type="button" class="input-toggle-btn active" data-target="pf-file-section">
+                                <i class="fas fa-file-upload"></i> Upload de Arquivo
+                            </button>
+                            <button type="button" class="input-toggle-btn" data-target="pf-text-section">
+                                <i class="fas fa-paste"></i> Colar Texto
+                            </button>
+                            <div class="input-toggle-indicator"></div>
+                        </div>
+
+                        <div class="input-section active" id="pf-file-section">
+                            <div class="file-upload">
+                                <input type="file" id="pf-file" name="cv_file" accept=".pdf,.doc,.docx,.txt">
+                                <label for="pf-file" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Clique para fazer upload do currículo (PDF, DOC, DOCX, TXT)</span>
+                                </label>
+                            </div>
+                            <div class="file-name" id="pf-file-name"></div>
+                        </div>
+
+                        <div class="input-section" id="pf-text-section">
+                            <textarea id="pf-text" name="cv_text" class="text-input" placeholder="Cole o texto do seu currículo aqui..."></textarea>
+                            <div class="char-count">
+                                <span id="pf-char-count">0</span> caracteres
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-block" id="pf-submit">
+                        <i class="fas fa-magic"></i> Otimizar Currículo com IA
+                    </button>
+                </form>
+
+                <div class="loading" id="pf-loading">
+                    <div class="spinner"></div>
+                    <p>Analisando seu currículo com IA...</p>
+                    <div class="ai-process">
+                        <i class="fas fa-brain"></i>
+                        <span>Estamos processando suas informações e identificando oportunidades de melhoria...</span>
+                    </div>
+                </div>
+
+                <div class="result" id="pf-result">
+                    <h2 class="result-title">
+                        <i class="fas fa-chart-line"></i> Análise do Currículo
+                    </h2>
+                    
+                    <div class="score-container">
+                        <div class="score-circle">
+                            <svg>
+                                <circle class="score-circle-bg" cx="70" cy="70" r="60"></circle>
+                                <circle class="score-circle-progress" cx="70" cy="70" r="60"></circle>
+                            </svg>
+                            <div class="score-text" id="pf-score">0%</div>
+                        </div>
+                        <div class="score-info">
+                            <h3>Pontuação Geral</h3>
+                            <p id="pf-score-description">Seu currículo está sendo analisado.</p>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section" id="pf-summary-section">
+                        <h3>
+                            <i class="fas fa-chart-line"></i> Resumo da Análise
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                        <div class="analysis-content" id="pf-summary-content"></div>
+                    </div>
+
+                    <div class="analysis-section" id="pf-strengths-section">
+                        <h3>
+                            <i class="fas fa-star"></i> Pontos Fortes
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                        <div class="analysis-content" id="pf-strengths-content"></div>
+                    </div>
+
+                    <div class="analysis-section" id="pf-suggestions-section">
+                        <h3>
+                            <i class="fas fa-lightbulb"></i> Sugestões de Melhoria
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                        <div class="analysis-content" id="pf-suggestions-content"></div>
+                    </div>
+
+                    <div class="analysis-section" id="pf-optimizations-section">
+                        <h3>
+                            <i class="fas fa-magic"></i> Otimizações Específicas
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                        <div class="analysis-content" id="pf-optimizations-content"></div>
+                    </div>
+
+                    <div class="analysis-section" id="pf-recommendations-section">
+                        <h3>
+                            <i class="fas fa-bullseye"></i> Recomendações para a Área
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                        <div class="analysis-content" id="pf-recommendations-content"></div>
+                    </div>
+
+                    <div class="improved-cv-section" id="pf-improved-cv-section">
+                        <div class="analysis-section">
+                            <h3><i class="fas fa-file-alt"></i> Currículo Ajustado</h3>
+                            
+                            <div class="improved-cv-container">
+                                <div class="improved-cv-header">
+                                    <h4>Versão Otimizada Pronta para Enviar</h4>
+                                    <div class="improved-cv-actions">
+                                        <button class="btn btn-success" id="pf-copy-improved-cv">
+                                            <i class="fas fa-copy"></i> Copiar Currículo
+                                        </button>
+                                        <button class="btn btn-secondary" id="pf-download-improved-cv">
+                                            <i class="fas fa-download"></i> Baixar como TXT
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="cv-content" id="pf-improved-cv-content"></div>
+                                
+                                <div class="highlight-box">
+                                    <p><strong>Dica:</strong> O currículo acima já está formatado e pronto para uso.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="pj">
+                <div class="alert alert-error" id="pj-error"></div>
+                
+                <form id="pj-form">
+                    <div class="form-group">
+                        <label for="pj-specs">
+                            <i class="fas fa-search"></i> O que você busca no candidato?
+                        </label>
+                        <textarea id="pj-specs" name="specs" class="text-input" placeholder="Descreva detalhadamente o que você procura em um candidato: experiências necessárias, habilidades técnicas, competências comportamentais, formação acadêmica, etc."></textarea>
+                        <div class="char-count">
+                            <span id="pj-specs-char-count">0</span> caracteres
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pj-area">
+                            <i class="fas fa-briefcase"></i> Área da Vaga
+                        </label>
+                        <select id="pj-area" name="area">
+                            <option value="">Selecione a área da vaga</option>
+                            <option value="tecnologia">Tecnologia</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="vendas">Vendas</option>
+                            <option value="rh">Recursos Humanos</option>
+                            <option value="financeiro">Financeiro</option>
+                            <option value="juridico">Jurídico</option>
+                            <option value="saude">Saúde</option>
+                            <option value="educacao">Educação</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-file-upload"></i> Currículo do Candidato
+                        </label>
+                        <div class="input-toggle">
+                            <button type="button" class="input-toggle-btn active" data-target="pj-file-section">
+                                <i class="fas fa-file-upload"></i> Upload de Arquivo
+                            </button>
+                            <button type="button" class="input-toggle-btn" data-target="pj-text-section">
+                                <i class="fas fa-paste"></i> Colar Texto
+                            </button>
+                            <div class="input-toggle-indicator"></div>
+                        </div>
+
+                        <div class="input-section active" id="pj-file-section">
+                            <div class="file-upload">
+                                <input type="file" id="pj-file" name="cv_file" accept=".pdf,.doc,.docx,.txt">
+                                <label for="pj-file" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Clique para fazer upload do currículo (PDF, DOC, DOCX, TXT)</span>
+                                </label>
+                            </div>
+                            <div class="file-name" id="pj-file-name"></div>
+                        </div>
+
+                        <div class="input-section" id="pj-text-section">
+                            <textarea id="pj-text" name="cv_text" class="text-input" placeholder="Cole o texto do currículo do candidato aqui..."></textarea>
+                            <div class="char-count">
+                                <span id="pj-char-count">0</span> caracteres
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-block" id="pj-submit">
+                        <i class="fas fa-search"></i> Analisar Candidato com IA
+                    </button>
+                </form>
+
+                <div class="loading" id="pj-loading">
+                    <div class="spinner"></div>
+                    <p>Analisando o candidato com IA...</p>
+                    <div class="ai-process">
+                        <i class="fas fa-brain"></i>
+                        <span>Estamos comparando o currículo com os requisitos da vaga...</span>
+                    </div>
+                </div>
+
+                <div class="result" id="pj-result">
+                    <h2 class="result-title">
+                        <i class="fas fa-chart-line"></i> Análise do Candidato
+                    </h2>
+                    
+                    <div class="score-container">
+                        <div class="score-circle">
+                            <svg>
+                                <circle class="score-circle-bg" cx="70" cy="70" r="60"></circle>
+                                <circle class="score-circle-progress" cx="70" cy="70" r="60"></circle>
+                            </svg>
+                            <div class="score-text" id="pj-score">0%</div>
+                        </div>
+                        <div class="score-info">
+                            <h3>Adequação à Vaga</h3>
+                            <p id="pj-score-description">O candidato está sendo analisado.</p>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section" id="pj-profile-section">
+                        <h3>
+                            <i class="fas fa-user"></i> Perfil do Candidato
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                        <div class="analysis-content" id="pj-profile-content"></div>
+                    </div>
+
+                    <div class="analysis-section" id="pj-match-section">
+                        <h3>
+                            <i class="fas fa-chart-bar"></i> Análise de Correspondência
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                        <div class="analysis-content" id="pj-match-content"></div>
+                    </div>
+
+                    <div class="analysis-section" id="pj-qualifications-section">
+                        <h3>
+                            <i class="fas fa-award"></i> Qualificações Relevantes
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                        <div class="analysis-content" id="pj-qualifications-content"></div>
+                    </div>
+
+                    <div class="analysis-section" id="pj-gaps-section">
+                        <h3>
+                            <i class="fas fa-exclamation-triangle"></i> Gaps Identificados
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                        <div class="analysis-content" id="pj-gaps-content"></div>
+                    </div>
+
+                    <div class="analysis-section" id="pj-recommendation-section">
+                        <h3>
+                            <i class="fas fa-clipboard-check"></i> Recomendação
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                        <div class="analysis-content" id="pj-recommendation-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>CareerForge &copy; 2025 - Transforme sua carreira com IA</p>
+        </footer>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                document.querySelectorAll('.result').forEach(result => {
+                    result.style.display = 'none';
+                });
+                document.querySelectorAll('.loading').forEach(loading => {
+                    loading.style.display = 'none';
+                });
+                document.querySelectorAll('.alert').forEach(alert => {
+                    alert.style.display = 'none';
+                });
+            });
+        });
+
+        document.querySelectorAll('.input-toggle-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const parent = this.closest('.input-toggle');
+                
+                parent.querySelectorAll('.input-toggle-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const formGroup = this.closest('.form-group');
+                formGroup.querySelectorAll('.input-section').forEach(section => section.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        document.getElementById('pf-file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : 'Nenhum arquivo selecionado';
+            document.getElementById('pf-file-name').textContent = fileName;
+        });
+
+        document.getElementById('pj-file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : 'Nenhum arquivo selecionado';
+            document.getElementById('pj-file-name').textContent = fileName;
+        });
+
+        document.getElementById('pf-text').addEventListener('input', function() {
+            document.getElementById('pf-char-count').textContent = this.value.length;
+        });
+
+        document.getElementById('pj-text').addEventListener('input', function() {
+            document.getElementById('pj-char-count').textContent = this.value.length;
+        });
+
+        document.getElementById('pj-specs').addEventListener('input', function() {
+            document.getElementById('pj-specs-char-count').textContent = this.value.length;
+        });
+
+        document.querySelectorAll('.analysis-section h3').forEach(header => {
+            header.addEventListener('click', function() {
+                const section = this.closest('.analysis-section');
+                section.classList.toggle('collapsed');
+            });
+        });
+
+        function showError(tab, message) {
+            const errorElement = document.getElementById(`${tab}-error`);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 5000);
+        }
+
+        function animateScoreCircle(elementId, score) {
+            const circle = document.querySelector(`#${elementId} .score-circle-progress`);
+            const scoreText = document.querySelector(`#${elementId} .score-text`);
+            const circumference = 2 * Math.PI * 60;
+            const offset = circumference - (score / 100) * circumference;
+            
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            circle.style.strokeDashoffset = circumference;
+            
+            setTimeout(() => {
+                circle.style.transition = 'stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1)';
+                circle.style.strokeDashoffset = offset;
+                
+                let currentScore = 0;
+                const increment = score / 50;
+                const timer = setInterval(() => {
+                    currentScore += increment;
+                    if (currentScore >= score) {
+                        currentScore = score;
+                        clearInterval(timer);
+                    }
+                    scoreText.textContent = Math.round(currentScore) + '%';
+                }, 40);
+                
+                createRippleEffect(document.querySelector(`#${elementId} .score-circle`));
+            }, 300);
+        }
+
+        function createRippleEffect(element) {
+            const ripple = document.createElement('div');
+            ripple.classList.add('ripple');
+            const rect = element.getBoundingClientRect();
+            ripple.style.width = ripple.style.height = Math.min(rect.width, rect.height) + 'px';
+            ripple.style.left = (rect.width - parseInt(ripple.style.width)) / 2 + 'px';
+            ripple.style.top = (rect.height - parseInt(ripple.style.height)) / 2 + 'px';
+            
+            element.appendChild(ripple);
+            setTimeout(() => {
+                ripple.remove();
+            }, 1000);
+        }
+
+        async function getCVData(tab) {
+            const fileSection = document.getElementById(`${tab}-file-section`);
+            const isFileMode = fileSection.classList.contains('active');
+            
+            if (isFileMode) {
+                const fileInput = document.getElementById(`${tab}-file`);
+                if (!fileInput.files.length) {
+                    return { error: 'Por favor, selecione um arquivo de currículo.' };
+                }
+                
+                const file = fileInput.files[0];
+                
+                if (file.size > 5 * 1024 * 1024) {
+                    return { error: 'Arquivo muito grande. Tamanho máximo: 5MB.' };
+                }
+                
+                const allowedTypes = ['application/pdf', 'application/msword', 
+                                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
+                                     'text/plain'];
+                if (!allowedTypes.includes(file.type)) {
+                    return { error: 'Tipo de arquivo não suportado. Use PDF, DOC, DOCX ou TXT.' };
+                }
+                
+                return { 
+                    type: 'file', 
+                    file: file
+                };
+                
+            } else {
+                const textInput = document.getElementById(`${tab}-text`);
+                const text = textInput.value.trim();
+                if (!text) {
+                    return { error: 'Por favor, cole o texto do currículo.' };
+                }
+                
+                if (text.length < 50) {
+                    return { error: 'O texto do currículo deve ter pelo menos 50 caracteres.' };
+                }
+                
+                return { type: 'text', data: text };
+            }
+        }
+
+        function processAnalysisResponse(analysis, tab) {
+            if (tab === 'pf') {
+                document.getElementById('pf-score').textContent = analysis.score + '%';
+                document.getElementById('pf-score-description').textContent = analysis.score_description;
+                animateScoreCircle('pf-result', analysis.score);
+                
+                document.getElementById('pf-summary-content').innerHTML = `<div class="highlight-box"><p>${analysis.summary}</p></div>`;
+                
+                const strengthsContainer = document.getElementById('pf-strengths-content');
+                strengthsContainer.innerHTML = '';
+                if (analysis.strengths && analysis.strengths.length > 0) {
+                    analysis.strengths.forEach((strength, index) => {
+                        const strengthElement = document.createElement('div');
+                        strengthElement.className = 'suggestion-item';
+                        strengthElement.style.animationDelay = `${index * 0.1}s`;
+                        strengthElement.innerHTML = `
+                            <div class="suggestion-title">
+                                <i class="fas fa-check-circle"></i>
+                                ${strength.title}
+                            </div>
+                            <p>${strength.description}</p>
+                            <div class="suggestion-content">${strength.content}</div>
+                        `;
+                        strengthsContainer.appendChild(strengthElement);
+                    });
+                }
+                
+                const suggestionsContainer = document.getElementById('pf-suggestions-content');
+                suggestionsContainer.innerHTML = '';
+                if (analysis.suggestions && analysis.suggestions.length > 0) {
+                    analysis.suggestions.forEach((suggestion, index) => {
+                        const suggestionElement = document.createElement('div');
+                        suggestionElement.className = 'suggestion-item';
+                        suggestionElement.style.animationDelay = `${index * 0.1}s`;
+                        suggestionElement.innerHTML = `
+                            <div class="suggestion-title">
+                                <i class="fas fa-lightbulb"></i>
+                                ${suggestion.title}
+                            </div>
+                            <p>${suggestion.description}</p>
+                            <div class="suggestion-content">${suggestion.content}</div>
+                        `;
+                        suggestionsContainer.appendChild(suggestionElement);
+                    });
+                }
+                
+                const optimizationsContainer = document.getElementById('pf-optimizations-content');
+                optimizationsContainer.innerHTML = '';
+                if (analysis.optimizations && analysis.optimizations.length > 0) {
+                    analysis.optimizations.forEach((optimization, index) => {
+                        const optimizationElement = document.createElement('div');
+                        optimizationElement.className = 'suggestion-item';
+                        optimizationElement.style.animationDelay = `${index * 0.1}s`;
+                        optimizationElement.innerHTML = `
+                            <div class="suggestion-title">
+                                <i class="fas fa-magic"></i>
+                                ${optimization.title}
+                            </div>
+                            <p>${optimization.description}</p>
+                            <div class="suggestion-content">${optimization.content}</div>
+                        `;
+                        optimizationsContainer.appendChild(optimizationElement);
+                    });
+                }
+                
+                const recommendationsContainer = document.getElementById('pf-recommendations-content');
+                recommendationsContainer.innerHTML = '';
+                if (analysis.recommendations && analysis.recommendations.length > 0) {
+                    analysis.recommendations.forEach((recommendation, index) => {
+                        const recommendationElement = document.createElement('div');
+                        recommendationElement.className = 'suggestion-item';
+                        recommendationElement.style.animationDelay = `${index * 0.1}s`;
+                        recommendationElement.innerHTML = `
+                            <div class="suggestion-title">
+                                <i class="fas fa-bullseye"></i>
+                                ${recommendation.title}
+                            </div>
+                            <p>${recommendation.description}</p>
+                            <div class="suggestion-content">${recommendation.content}</div>
+                        `;
+                        recommendationsContainer.appendChild(recommendationElement);
+                    });
+                }
+                
+                if (analysis.improved_cv) {
+                    const improvedCVSection = document.getElementById('pf-improved-cv-section');
+                    const improvedCVContent = document.getElementById('pf-improved-cv-content');
+                    
+                    improvedCVContent.textContent = analysis.improved_cv;
+                    improvedCVSection.style.display = 'block';
+                }
+            } else if (tab === 'pj') {
+                document.getElementById('pj-score').textContent = analysis.score + '%';
+                document.getElementById('pj-score-description').textContent = analysis.score_description;
+                animateScoreCircle('pj-result', analysis.score);
+                
+                document.getElementById('pj-profile-content').innerHTML = `<div class="highlight-box"><p>${analysis.profile}</p></div>`;
+                
+                const matchContainer = document.getElementById('pj-match-content');
+                matchContainer.innerHTML = '';
+                if (analysis.match_analysis && analysis.match_analysis.length > 0) {
+                    analysis.match_analysis.forEach((match, index) => {
+                        const matchElement = document.createElement('div');
+                        matchElement.className = 'match-item';
+                        matchElement.style.animationDelay = `${index * 0.1}s`;
+                        matchElement.innerHTML = `
+                            <div class="match-title">
+                                ${match.title}
+                                <span class="match-level ${match.matchClass}">${match.match}</span>
+                            </div>
+                            <p>${match.description}</p>
+                        `;
+                        matchContainer.appendChild(matchElement);
+                    });
+                }
+                
+                const qualificationsContainer = document.getElementById('pj-qualifications-content');
+                qualificationsContainer.innerHTML = '';
+                if (analysis.qualifications && analysis.qualifications.length > 0) {
+                    analysis.qualifications.forEach((qualification, index) => {
+                        const qualificationElement = document.createElement('div');
+                        qualificationElement.className = 'suggestion-item';
+                        qualificationElement.style.animationDelay = `${index * 0.1}s`;
+                        qualificationElement.innerHTML = `
+                            <div class="suggestion-title">
+                                <i class="fas fa-check-circle"></i>
+                                ${qualification.title}
+                            </div>
+                            <p>${qualification.description}</p>
+                            <div class="suggestion-content">${qualification.content}</div>
+                        `;
+                        qualificationsContainer.appendChild(qualificationElement);
+                    });
+                }
+                
+                const gapsContainer = document.getElementById('pj-gaps-content');
+                gapsContainer.innerHTML = '';
+                if (analysis.gaps && analysis.gaps.length > 0) {
+                    analysis.gaps.forEach((gap, index) => {
+                        const gapElement = document.createElement('div');
+                        gapElement.className = 'suggestion-item';
+                        gapElement.style.animationDelay = `${index * 0.1}s`;
+                        gapElement.innerHTML = `
+                            <div class="suggestion-title">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                ${gap.title}
+                            </div>
+                            <p>${gap.description}</p>
+                            <div class="suggestion-content">${gap.content}</div>
+                        `;
+                        gapsContainer.appendChild(gapElement);
+                    });
+                }
+                
+                document.getElementById('pj-recommendation-content').innerHTML = `<div class="highlight-box"><p>${analysis.recommendation}</p></div>`;
+            }
+        }
+
+        document.getElementById('pf-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const areaSelect = document.getElementById('pf-area');
+            const submitBtn = document.getElementById('pf-submit');
+            
+            const cvData = await getCVData('pf');
+            if (cvData.error) {
+                showError('pf', cvData.error);
+                return;
+            }
+            
+            document.getElementById('pf-loading').style.display = 'block';
+            document.getElementById('pf-result').style.display = 'none';
+            document.getElementById('pf-improved-cv-section').style.display = 'none';
+            submitBtn.disabled = true;
+            
+            try {
+                const formData = new FormData();
+                formData.append('type', 'pf');
+                formData.append('area', areaSelect.value);
+                
+                if (cvData.type === 'file') {
+                    formData.append('cv_file', cvData.file);
+                } else {
+                    formData.append('cv_text', cvData.data);
+                }
+                
+                const response = await fetch('analyze.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Erro no servidor: ' + response.status);
+                }
+                
+                const analysis = await response.json();
+                
+                if (analysis.error) {
+                    throw new Error(analysis.error);
+                }
+                
+                document.getElementById('pf-loading').style.display = 'none';
+                document.getElementById('pf-result').style.display = 'block';
+                
+                processAnalysisResponse(analysis, 'pf');
+                
+                document.getElementById('pf-copy-improved-cv').addEventListener('click', function() {
+                    const cvContent = document.getElementById('pf-improved-cv-content').textContent;
+                    navigator.clipboard.writeText(cvContent).then(() => {
+                        const originalText = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                        this.style.background = 'var(--success)';
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.style.background = '';
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Erro ao copiar: ', err);
+                    });
+                });
+                
+                document.getElementById('pf-download-improved-cv').addEventListener('click', function() {
+                    const cvContent = document.getElementById('pf-improved-cv-content').textContent;
+                    const blob = new Blob([cvContent], { type: 'text/plain;charset=utf-8' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'curriculo-otimizado.txt';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                });
+                
+            } catch (error) {
+                document.getElementById('pf-loading').style.display = 'none';
+                showError('pf', error.message);
+            }
+            
+            submitBtn.disabled = false;
+        });
+
+        document.getElementById('pj-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const specs = document.getElementById('pj-specs').value.trim();
+            const area = document.getElementById('pj-area').value;
+            const submitBtn = document.getElementById('pj-submit');
+            
+            if (!specs) {
+                showError('pj', 'Por favor, descreva o que você busca no candidato.');
+                return;
+            }
+            
+            const cvData = await getCVData('pj');
+            if (cvData.error) {
+                showError('pj', cvData.error);
+                return;
+            }
+            
+            document.getElementById('pj-loading').style.display = 'block';
+            document.getElementById('pj-result').style.display = 'none';
+            submitBtn.disabled = true;
+            
+            try {
+                const formData = new FormData();
+                formData.append('type', 'pj');
+                formData.append('area', area);
+                formData.append('specs', specs);
+                
+                if (cvData.type === 'file') {
+                    formData.append('cv_file', cvData.file);
+                } else {
+                    formData.append('cv_text', cvData.data);
+                }
+                
+                const response = await fetch('analyze.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Erro no servidor: ' + response.status);
+                }
+                
+                const analysis = await response.json();
+                
+                if (analysis.error) {
+                    throw new Error(analysis.error);
+                }
+                
+                document.getElementById('pj-loading').style.display = 'none';
+                document.getElementById('pj-result').style.display = 'block';
+                
+                processAnalysisResponse(analysis, 'pj');
+                
+            } catch (error) {
+                document.getElementById('pj-loading').style.display = 'none';
+                showError('pj', error.message);
+            }
+            
+            submitBtn.disabled = false;
+        });
+    </script>
+</body>
+</html>
